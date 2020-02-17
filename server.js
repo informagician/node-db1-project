@@ -55,4 +55,17 @@ server.put('/api/accounts/:id' ,(req,res) => {
     })
 })
 
+server.delete('/api/accounts/:id', (req,res) => {
+    const id = req.params.id
+    db('accounts')
+    .where({ id })
+    .del()
+    .then(count => {
+        res.status(200).json(count)
+    })
+    .catch(err => {
+        res.status(500).json({error: 'problem deleting account'})
+    })
+})
+
 module.exports = server;
