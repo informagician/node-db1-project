@@ -7,9 +7,14 @@ const server = express();
 server.use(express.json());
 
 server.get('/api/accounts', (req,res) => {
+    const limit = req.query.limit
+    const sortby = req.query.sortby
+    const dir = req.query.sortdir
     db
     .select('*')
     .from('accounts')
+    .limit(limit)
+    .orderBy(sortby,dir)
     .then(accounts => {
         res.status(200).json(accounts)
     })
